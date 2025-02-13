@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nosso Amor</title>
+    <style>
+        body {
+            font-family: 'Playfair Display', serif; /* Fonte elegante */
+            margin: 0;
+            background-color: #000;
+            color: #f8f0e3; /* Cor mais suave para o texto */
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        #star-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            width: 4px; /* Estrelas menores */
+            height: 4px;
+            background-color: #0bd437;
+            border-radius: 50%;
+            box-shadow: 0 0 2px #fff, 0 0 5px rgba(8, 4, 253, 0.3);
+            animation: twinkle 1s linear infinite;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.1; } /* Opacidade mais baixa */
+            50% { opacity: 0.7; }
+            100% { opacity: 0.1; }
+        }
+
+        .content {
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.5); /* Fundo semi-transparente para o conteúdo */
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1); /* Sombra suave */
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            font-weight: 400;
+            letter-spacing: 2px; /* Espaçamento entre as letras */
+        }
+
+        .timer {
+            font-size: 1.8em;
+            margin-bottom: 30px;
+        }
+
+        .images {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 40px;
+            animation: float 8s ease-in-out infinite alternate; /* Animação de flutuação */
+        }
+
+        .images img {
+            width: 180px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid #f8f0e3; /* Borda mais suave */
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+
+         @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-15px); } /* Flutua um pouco para cima */
+            100% { transform: translateY(0); }
+        }
+
+        .interstellar-quote {
+            font-style: italic;
+            font-size: 1.2em;
+            opacity: 0.8;
+            margin-top: 20px;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div id="star-container"></div>
+    <div class="content">
+        <h1>Nossa História</h1>
+        <div class="timer" id="timer"></div>
+        <div class="images">
+            <img src="amor1.jpg">
+        </div>
+        <div class="interstellar-quote">"Seu amor inspira minha melhor versão. Te amo! ❤"</div>
+        
+    </div>
+    <script>
+        const startDate = new Date("2023-02-14T00:00:00"); // Data corrigida para a real
+
+function updateTimer() {
+    const now = new Date();
+    let years = now.getFullYear() - startDate.getFullYear();
+    let months = now.getMonth() - startDate.getMonth();
+    let days = now.getDate() - startDate.getDate();
+
+    // Se o mês ainda não chegou, reduzir 1 ano
+    if (months < 0 || (months === 0 && days < 0)) {
+        years--;
+        months += 12; // Compensa a subtração
+    }
+
+    // Ajustar dias se necessário
+    if (days < 0) {
+        const lastMonth = new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+        days += lastMonth;
+        months--;
+    }
+
+    const diff = now - startDate;
+    const hours = Math.floor(diff / (1000 * 60 * 60)) % 24;
+    const minutes = Math.floor(diff / (1000 * 60)) % 60;
+    const seconds = Math.floor(diff / 1000) % 60;
+
+    document.getElementById("timer").textContent = 
+        `${years} anos, ${months} meses, ${days} dias, ${hours} horas, ${minutes} minutos e ${seconds} segundos`;
+}
+
+setInterval(updateTimer, 1000);
+updateTimer();
+
+
+        const numStars = 200; // Menos estrelas para um visual mais limpo
+        const starContainer = document.getElementById('star-container');
+
+        for (let i = 0; i < numStars; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+
+            const x = Math.random() * 100;
+            const y = Math.random() * 100;
+            const size = Math.random() * 1 + 0.5; // Estrelas menores
+            const duration = Math.random() * 4 + 3;
+
+            star.style.left = `${x}vw`;
+            star.style.top = `${y}vh`;
+            star.style.transform = `scale(${size})`;
+            star.style.animationDuration = `${duration}s`;
+
+            starContainer.appendChild(star);
+        }
+    </script>
+</body>
+</html>
